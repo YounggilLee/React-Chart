@@ -27,7 +27,7 @@ class App extends Component {
     var tempInfo = [];
         // Ajax calls here
         const connection = new autobahn.Connection({
-          url: 'ws://138.197.146.172:9000/ws', 
+          url: 'ws://138.197.146.172:8080/ws', 
           realm: 'realm1'
         });
 
@@ -37,10 +37,13 @@ class App extends Component {
           
           session.subscribe('com.test.both', function (message) {
                 
-               console.log(message);
+             //  console.log(message);
                tempInfo.push(message[0])
         
-             console.log(tempInfo);
+             console.log(tempInfo.length);
+
+
+             
           });
          
         }
