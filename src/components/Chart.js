@@ -9,12 +9,12 @@ class Chart extends Component{
     }
   }
 
-  static defaultProps = {
-    displayTitle:true,
-    displayLegend: true,
-    legendPosition:'right',
-    location:'City'
-  }
+  // static defaultProps = {
+  //   displayTitle:true,
+  //   displayLegend: true,
+  //   legendPosition:'right',
+  //   location:'City'
+  // }
 
   render(){
     return (
@@ -24,7 +24,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:'Largest Cities In '+this.props.location,
+              text:'Largest Cities In '+ this.props.location,
               fontSize:25
             },
             legend:{
