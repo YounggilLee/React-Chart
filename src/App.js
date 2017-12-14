@@ -9,25 +9,20 @@ class App extends Component {
     super(props);
     this.state = {
       chartData:{}
-    }
-
-   
+        }   
   }
-
  
-
   componentWillMount(){
     this.getChartData();
   }
 
-
-
   getChartData(){      
     
     var tempInfo = [];
-        // Ajax calls here
+
+        // Websocket calls
         const connection = new autobahn.Connection({
-          url: 'ws://138.197.146.172:8080/ws', 
+          url: 'ws://138.197.146.172:9000/ws', 
           realm: 'realm1'
         });
 
@@ -35,43 +30,44 @@ class App extends Component {
         connection.onopen = function (session) {
           console.log('websocket is connected ...')              
           
-          session.subscribe('com.test.both', function (message) {
+          session.subscribe('com.test.temp', function (message) {
                 
-             //  console.log(message);
+             console.log(message);
                tempInfo.push(message[0])
         
              console.log(tempInfo.length);
 
 
+             this.setState({                 
+              chartData:{
+                labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+                datasets:[
+                  {
+                    label:'Population',
+                    data: tempInfo,
+                    backgroundColor:[
+                      'rgba(255, 99, 132, 0.6)',
+                      'rgba(54, 162, 235, 0.6)',
+                      'rgba(255, 206, 86, 0.6)',
+                      'rgba(75, 192, 192, 0.6)',
+                      'rgba(153, 102, 255, 0.6)',
+                      'rgba(255, 159, 64, 0.6)',
+                      'rgba(255, 99, 132, 0.6)'
+                    ]
+                  }
+                ]
+              }
+            });//end setState
              
-          });
+          });//end subcribe
          
-        }
+        }//end session
         
         connection.open();        
 
-        this.setState({                 
-          chartData:{
-            labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
-            datasets:[
-              {
-                label:'Population',
-                data: tempInfo,
-                backgroundColor:[
-                  'rgba(255, 99, 132, 0.6)',
-                  'rgba(54, 162, 235, 0.6)',
-                  'rgba(255, 206, 86, 0.6)',
-                  'rgba(75, 192, 192, 0.6)',
-                  'rgba(153, 102, 255, 0.6)',
-                  'rgba(255, 159, 64, 0.6)',
-                  'rgba(255, 99, 132, 0.6)'
-                ]
-              }
-            ]
-          }
-        });
+        
 
-  }
+  }//end getData function
 
   render() {
     return (
