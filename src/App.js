@@ -22,7 +22,7 @@ class App extends Component {
 
         // Websocket calls
         const connection = new autobahn.Connection({
-          url: 'ws://138.197.146.172:9000/ws', 
+          url: 'localhost:9000', 
           realm: 'realm1'
         });
 
